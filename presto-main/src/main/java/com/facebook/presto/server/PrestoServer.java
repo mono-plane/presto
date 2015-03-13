@@ -125,7 +125,7 @@ public class PrestoServer
         }
         catch (Throwable e) {
             log.error(e);
-            throw new IllegalStateException("Failed to start server", e);
+            throw new IllegalStateException(e.getMessage());
         }
     }
 
