@@ -58,7 +58,12 @@ public class PrestoServer
 
     public static void main(String[] args)
     {
-        new PrestoServer().run();
+        try {
+            new PrestoServer().run();
+        } catch (Throwable t) {
+            System.out.println("Going to exit due to: "+t.getMessage());
+            System.exit(1);
+        }
     }
 
     private final SqlParserOptions sqlParserOptions;
@@ -122,7 +127,7 @@ public class PrestoServer
         }
         catch (Throwable e) {
             log.error(e);
-            System.exit(1);
+            throw new IllegalStateException("Failed to start server", e);
         }
     }
 
