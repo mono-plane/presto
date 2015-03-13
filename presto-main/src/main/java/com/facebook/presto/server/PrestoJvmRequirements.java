@@ -57,7 +57,6 @@ final class PrestoJvmRequirements
 
     private static void failRequirement(String format, Object... args)
     {
-        System.err.println(String.format(format, args));
-        System.exit(100);
+        throw new IllegalStateException(String.format(format, args));
     }
 }

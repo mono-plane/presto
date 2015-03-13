@@ -60,8 +60,9 @@ public class PrestoServer
     {
         try {
             new PrestoServer().run();
-        } catch (Throwable t) {
-            System.out.println("Going to exit due to: "+t.getMessage());
+        }
+        catch (Throwable t) {
+            System.out.println("Going to exit due to: " + t.getMessage());
             System.exit(1);
         }
     }
@@ -127,7 +128,7 @@ public class PrestoServer
         }
         catch (Throwable e) {
             log.error(e);
-            throw new IllegalStateException("Failed to start server", e);
+            throw new IllegalStateException(e.getMessage());
         }
     }
 
