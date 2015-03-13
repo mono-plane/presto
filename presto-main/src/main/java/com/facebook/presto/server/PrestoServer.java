@@ -54,6 +54,8 @@ import static io.airlift.discovery.client.ServiceAnnouncement.serviceAnnouncemen
 public class PrestoServer
         implements Runnable
 {
+    private Announcer announcer;
+
     public static void main(String[] args)
     {
         new PrestoServer().run();
@@ -107,13 +109,14 @@ public class PrestoServer
             injector.getInstance(CatalogManager.class).loadCatalogs();
 
             // TODO: remove this huge hack
+            announcer = injector.getInstance(Announcer.class);
             updateDatasources(
-                    injector.getInstance(Announcer.class),
+                    announcer,
                     injector.getInstance(Metadata.class),
                     injector.getInstance(ServerConfig.class),
                     injector.getInstance(NodeSchedulerConfig.class));
 
-            injector.getInstance(Announcer.class).start();
+            announcer.start();
 
             log.info("======== SERVER STARTED ========");
         }
@@ -121,6 +124,11 @@ public class PrestoServer
             log.error(e);
             System.exit(1);
         }
+    }
+
+    public void shutdown()
+    {
+        announcer.destroy();
     }
 
     protected Iterable<? extends Module> getAdditionalModules()
