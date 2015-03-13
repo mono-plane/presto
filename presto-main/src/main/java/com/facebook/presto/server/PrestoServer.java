@@ -58,8 +58,9 @@ public class PrestoServer
     {
         try {
             new PrestoServer().run();
-        } catch (Throwable t) {
-            System.out.println("Going to exit due to: "+t.getMessage());
+        }
+        catch (Throwable t) {
+            System.out.println("Going to exit due to: " + t.getMessage());
             System.exit(1);
         }
     }
